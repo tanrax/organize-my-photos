@@ -8,7 +8,7 @@ import time
 import calendar
 import shutil
 
-EXTENSIONS = ('jpg', 'jpeg')
+EXTENSIONS = ('jpg', 'jpeg', 'gif')
 
 @click.command()
 @click.argument('path')
