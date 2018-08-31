@@ -13,7 +13,7 @@ EXTENSIONS = ('jpg', 'jpeg', 'gif')
 @click.command()
 @click.argument('path')
 @click.option('--locale', default=False, help='Specifies the language of the months. Example: es_ES')
-@click.option('--extension', default=False, help='change file extension for sorting.')
+@click.option('--extension', default=False, help='Change file extension for sorting.')
 def organize_my_photos(path, locale, extension):
     """ Sort in folder all photos """
     # Set locale
