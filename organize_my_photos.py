@@ -4,9 +4,22 @@
 # Libraries
 import os
 import click
+import datetime
 import time
 import calendar
 import shutil
+from PIL import Image
+
+def get_date_created(filename):
+    image = Image.open(filename)
+    image.verify()
+    # Format date d/m/Y
+    if image._getexif()[36867]:
+        # Metadata
+        return time.strftime('%d/%m/%Y', datetime.datetime.strptime(image._getexif()[36867], "%Y:%m:%d %H:%M:%S").timetuple())
+    else:
+        # Create data file
+        return time.strftime('%d/%m/%Y', time.gmtime(os.path.getctime(filename)))
 
 EXTENSIONS = ('jpg', 'jpeg', 'gif')
 
@@ -30,14 +43,14 @@ def organize_my_photos(path, locale, extension):
                 # Get path file
                 origin = os.path.join(root, file)
                 # Get date
-                date_mod = time.strftime('%d/%m/%Y', time.gmtime(os.path.getmtime(os.path.join(root, file))))
-                date_list = date_mod.split('/')
-                date_mod_day = date_list[0]
-                date_mod_month = date_list[1]
-                date_mod_year = date_list[2]
+                date_created = get_date_created(os.path.join(root, file))
+                date_list = date_created.split('/')
+                date_created_day = date_list[0]
+                date_created_month = date_list[1]
+                date_created_year = date_list[2]
                 # Make folder: format year/month day -> 2018/abr 23/photo.jpg
-                dest_folder = os.path.join(date_mod_year, f'{calendar.month_name[int(date_mod_month)]} {date_mod_day}')
-                dest = os.path.join(date_mod_year, f'{calendar.month_name[int(date_mod_month)]} {date_mod_day}', file)
+                dest_folder = os.path.join(date_created_year, f'{calendar.month_name[int(date_created_month)]} {date_created_day}')
+                dest = os.path.join(date_created_year, f'{calendar.month_name[int(date_created_month)]} {date_created_day}', file)
                 if not os.path.exists(dest_folder):
                     os.makedirs(dest_folder)
                 # Move photo
