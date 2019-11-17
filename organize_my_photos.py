@@ -16,7 +16,7 @@ def get_date_created(filename):
     image = Image.open(filename)
     image.verify()
     # Format date d/m/Y
-    if image._getexif() is not None and str(META_CREATED) in image._getexif():
+    if image._getexif() is not None and META_CREATED in image._getexif():
         # Metadata
         return time.strftime('%d/%m/%Y', datetime.datetime.strptime(image._getexif()[META_CREATED], "%Y:%m:%d %H:%M:%S").timetuple())
     else:
