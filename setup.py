@@ -2,7 +2,7 @@ from setuptools import setup
 setup(
   name = 'Organize-my-photos',
   py_modules=['organize_my_photos'],
-  version = '1.0.4',
+  version = '1.0.5',
   python_requires='>3.6',
   description = 'Terminal program that organizes and organizes the photographs in folders by year, month and day.',
   author = 'Andros Fenollosa',

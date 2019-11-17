@@ -10,13 +10,15 @@ import calendar
 import shutil
 from PIL import Image
 
+META_CREATED = 36867
+
 def get_date_created(filename):
     image = Image.open(filename)
     image.verify()
     # Format date d/m/Y
-    if image._getexif() is not None and '36867' in image._getexif():
+    if image._getexif() is not None and str(META_CREATED) in image._getexif():
         # Metadata
-        return time.strftime('%d/%m/%Y', datetime.datetime.strptime(image._getexif()[36867], "%Y:%m:%d %H:%M:%S").timetuple())
+        return time.strftime('%d/%m/%Y', datetime.datetime.strptime(image._getexif()[META_CREATED], "%Y:%m:%d %H:%M:%S").timetuple())
     else:
         # Create data file
         return time.strftime('%d/%m/%Y', time.gmtime(os.path.getctime(filename)))
